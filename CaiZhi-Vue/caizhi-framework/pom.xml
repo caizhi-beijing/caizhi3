@@ -58,6 +58,12 @@
             <groupId>com.caizhi</groupId>
             <artifactId>caizhi-system</artifactId>
         </dependency>
+        
+         <!-- 基础模块-->
+        <dependency>
+            <groupId>com.caizhi</groupId>
+            <artifactId>caizhi-basics</artifactId>
+        </dependency>
 
     </dependencies>
 

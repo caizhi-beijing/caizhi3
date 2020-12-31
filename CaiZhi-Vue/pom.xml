@@ -186,11 +186,18 @@
                 <artifactId>caizhi-system</artifactId>
                 <version>${caizhi.version}</version>
             </dependency>
-			
+            
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.caizhi</groupId>
                 <artifactId>caizhi-common</artifactId>
+                <version>${caizhi.version}</version>
+            </dependency>
+            
+            <!-- 基础模块-->
+            <dependency>
+                <groupId>com.caizhi</groupId>
+                <artifactId>caizhi-basics</artifactId>
                 <version>${caizhi.version}</version>
             </dependency>
 
@@ -204,6 +211,7 @@
         <module>caizhi-quartz</module>
         <module>caizhi-generator</module>
         <module>caizhi-common</module>
+        <module>caizhi-basics</module>
     </modules>
     <packaging>pom</packaging>
 
