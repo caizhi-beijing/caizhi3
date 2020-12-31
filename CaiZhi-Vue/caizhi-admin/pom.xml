@@ -72,7 +72,7 @@
             <groupId>com.caizhi</groupId>
             <artifactId>caizhi-generator</artifactId>
         </dependency>
-
+        
     </dependencies>
 
     <build>

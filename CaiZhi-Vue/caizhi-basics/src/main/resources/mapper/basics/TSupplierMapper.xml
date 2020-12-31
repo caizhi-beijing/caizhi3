@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caizhi.basics.mapper.TSupplierMapper">
+    
+    <resultMap type="TSupplier" id="TSupplierResult">
+        <result property="id"    column="ID"    />
+        <result property="supplierName"    column="SUPPLIER_NAME"    />
+        <result property="creditCode"    column="CREDIT_CODE"    />
+        <result property="address"    column="ADDRESS"    />
+        <result property="capital"    column="CAPITAL"    />
+        <result property="source"    column="SOURCE"    />
+        <result property="level"    column="LEVEL"    />
+        <result property="phone"    column="PHONE"    />
+        <result property="email"    column="EMAIL"    />
+        <result property="startDate"    column="START_DATE"    />
+        <result property="endDate"    column="END_DATE"    />
+        <result property="status"    column="STATUS"    />
+        <result property="remark"    column="REMARK"    />
+    </resultMap>
+
+    <sql id="selectTSupplierVo">
+        select ID, SUPPLIER_NAME, CREDIT_CODE, ADDRESS, CAPITAL, SOURCE, LEVEL, PHONE, EMAIL, START_DATE, END_DATE, STATUS, REMARK from t_data_supplier
+    </sql>
+
+    <select id="selectTSupplierList" parameterType="TSupplier" resultMap="TSupplierResult">
+        <include refid="selectTSupplierVo"/>
+        <where>  
+            <if test="supplierName != null  and supplierName != ''"> and SUPPLIER_NAME like concat('%', #{supplierName}, '%')</if>
+            <if test="creditCode != null "> and CREDIT_CODE = #{creditCode}</if>
+            <if test="address != null  and address != ''"> and ADDRESS = #{address}</if>
+            <if test="capital != null "> and CAPITAL = #{capital}</if>
+            <if test="source != null  and source != ''"> and SOURCE = #{source}</if>
+            <if test="level != null  and level != ''"> and LEVEL = #{level}</if>
+            <if test="phone != null "> and PHONE = #{phone}</if>
+            <if test="email != null  and email != ''"> and EMAIL = #{email}</if>
+            <if test="startDate != null "> and START_DATE = #{startDate}</if>
+            <if test="endDate != null "> and END_DATE = #{endDate}</if>
+            <if test="status != null  and status != ''"> and STATUS = #{status}</if>
+            <if test="remark != null  and remark != ''"> and REMARK = #{remark}</if>
+        </where>
+    </select>
+    
+    <select id="selectTSupplierById" parameterType="Long" resultMap="TSupplierResult">
+        <include refid="selectTSupplierVo"/>
+        where ID = #{id}
+    </select>
+        
+    <insert id="insertTSupplier" parameterType="TSupplier" useGeneratedKeys="true" keyProperty="id">
+        insert into t_data_supplier
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="supplierName != null and supplierName != ''">SUPPLIER_NAME,</if>
+            <if test="creditCode != null">CREDIT_CODE,</if>
+            <if test="address != null and address != ''">ADDRESS,</if>
+            <if test="capital != null">CAPITAL,</if>
+            <if test="source != null and source != ''">SOURCE,</if>
+            <if test="level != null and level != ''">LEVEL,</if>
+            <if test="phone != null">PHONE,</if>
+            <if test="email != null and email != ''">EMAIL,</if>
+            <if test="startDate != null">START_DATE,</if>
+            <if test="endDate != null">END_DATE,</if>
+            <if test="status != null and status != ''">STATUS,</if>
+            <if test="remark != null">REMARK,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="supplierName != null and supplierName != ''">#{supplierName},</if>
+            <if test="creditCode != null">#{creditCode},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="capital != null">#{capital},</if>
+            <if test="source != null and source != ''">#{source},</if>
+            <if test="level != null and level != ''">#{level},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="email != null and email != ''">#{email},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTSupplier" parameterType="TSupplier">
+        update t_data_supplier
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="supplierName != null and supplierName != ''">SUPPLIER_NAME = #{supplierName},</if>
+            <if test="creditCode != null">CREDIT_CODE = #{creditCode},</if>
+            <if test="address != null and address != ''">ADDRESS = #{address},</if>
+            <if test="capital != null">CAPITAL = #{capital},</if>
+            <if test="source != null and source != ''">SOURCE = #{source},</if>
+            <if test="level != null and level != ''">LEVEL = #{level},</if>
+            <if test="phone != null">PHONE = #{phone},</if>
+            <if test="email != null and email != ''">EMAIL = #{email},</if>
+            <if test="startDate != null">START_DATE = #{startDate},</if>
+            <if test="endDate != null">END_DATE = #{endDate},</if>
+            <if test="status != null and status != ''">STATUS = #{status},</if>
+            <if test="remark != null">REMARK = #{remark},</if>
+        </trim>
+        where ID = #{id}
+    </update>
+
+    <delete id="deleteTSupplierById" parameterType="Long">
+        delete from t_data_supplier where ID = #{id}
+    </delete>
+
+    <delete id="deleteTSupplierByIds" parameterType="String">
+        delete from t_data_supplier where ID in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
