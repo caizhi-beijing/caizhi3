@@ -35,8 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="level != null  and level != ''"> and LEVEL = #{level}</if>
             <if test="phone != null "> and PHONE = #{phone}</if>
             <if test="email != null  and email != ''"> and EMAIL = #{email}</if>
-            <if test="startDate != null "> and START_DATE = #{startDate}</if>
-            <if test="endDate != null "> and END_DATE = #{endDate}</if>
+            <if test="startDate != null ">
+                <![CDATA[and START_DATE >= #{startDate}]]>
+            </if>
+            <if test="endDate != null "> 
+            	<![CDATA[and END_DATE <= #{endDate}]]>
+            </if>
             <if test="status != null  and status != ''"> and STATUS = #{status}</if>
             <if test="remark != null  and remark != ''"> and REMARK = #{remark}</if>
         </where>
