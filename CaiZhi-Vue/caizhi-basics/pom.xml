@@ -7,7 +7,7 @@
 		<version>3.2.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.caizhi.basics</groupId>
+	<groupId>com.caizhi</groupId>
 	<artifactId>caizhi-basics</artifactId>
 
 	<description>
