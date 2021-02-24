@@ -2,11 +2,10 @@ package com.caizhi.basics.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.caizhi.common.annotation.Excel;
 import com.caizhi.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 供应商信息对象 t_data_supplier
@@ -66,6 +65,22 @@ public class TSupplier extends BaseEntity
     /** 供应商状态 */
     @Excel(name = "供应商状态")
     private String status;
+    
+    /** 供应商资质文件 */
+    @Excel(name = "供应商资质文件")
+    private String qualificationsFile;
+
+    /** 供应商营业执照 */
+    @Excel(name = "供应商营业执照")
+    private String businessLicense;
+
+    /** 供应商银行开户证明 */
+    @Excel(name = "供应商银行开户证明")
+    private String accountOpeningCertificate;
+
+    /** 公共邮箱地址 */
+    @Excel(name = "公共邮箱地址")
+    private String publicMailbox;
 
     public void setId(Long id) 
     {
@@ -176,22 +191,45 @@ public class TSupplier extends BaseEntity
         return status;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("supplierName", getSupplierName())
-            .append("creditCode", getCreditCode())
-            .append("address", getAddress())
-            .append("capital", getCapital())
-            .append("source", getSource())
-            .append("level", getLevel())
-            .append("phone", getPhone())
-            .append("email", getEmail())
-            .append("startDate", getStartDate())
-            .append("endDate", getEndDate())
-            .append("status", getStatus())
-            .append("remark", getRemark())
-            .toString();
-    }
+	public String getQualificationsFile() {
+		return qualificationsFile;
+	}
+
+	public void setQualificationsFile(String qualificationsFile) {
+		this.qualificationsFile = qualificationsFile;
+	}
+
+	public String getBusinessLicense() {
+		return businessLicense;
+	}
+
+	public void setBusinessLicense(String businessLicense) {
+		this.businessLicense = businessLicense;
+	}
+
+	public String getAccountOpeningCertificate() {
+		return accountOpeningCertificate;
+	}
+
+	public void setAccountOpeningCertificate(String accountOpeningCertificate) {
+		this.accountOpeningCertificate = accountOpeningCertificate;
+	}
+
+	public String getPublicMailbox() {
+		return publicMailbox;
+	}
+
+	public void setPublicMailbox(String publicMailbox) {
+		this.publicMailbox = publicMailbox;
+	}
+
+	@Override
+	public String toString() {
+		return "TSupplier [id=" + id + ", supplierName=" + supplierName + ", creditCode=" + creditCode + ", address="
+				+ address + ", capital=" + capital + ", source=" + source + ", level=" + level + ", phone=" + phone
+				+ ", email=" + email + ", startDate=" + startDate + ", endDate=" + endDate + ", status=" + status
+				+ ", qualificationsFile=" + qualificationsFile + ", businessLicense=" + businessLicense
+				+ ", accountOpeningCertificate=" + accountOpeningCertificate + ", publicMailbox=" + publicMailbox + "]";
+	}
+
 }
