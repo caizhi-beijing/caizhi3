@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.caizhi.system.mapper.TDataSupplierMapper">
+<mapper namespace="com.caizhi.basics.mapper.TSupplierMapper">
     
-    <resultMap type="TDataSupplier" id="TDataSupplierResult">
+    <resultMap type="TSupplier" id="TSupplierResult">
         <result property="id"    column="ID"    />
         <result property="supplierName"    column="SUPPLIER_NAME"    />
         <result property="creditCode"    column="CREDIT_CODE"    />
@@ -24,12 +24,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="publicMailbox"    column="PUBLIC_MAILBOX"    />
     </resultMap>
 
-    <sql id="selectTDataSupplierVo">
+    <sql id="selectTSupplierVo">
         select ID, SUPPLIER_NAME, CREDIT_CODE, ADDRESS, CAPITAL, SOURCE, LEVEL, PHONE, EMAIL, START_DATE, END_DATE, STATUS, REMARK, QUALIFICATIONS_FILE, BUSINESS_LICENSE, ACCOUNT_OPENING_CERTIFICATE, PUBLIC_MAILBOX from t_data_supplier
     </sql>
 
-    <select id="selectTDataSupplierList" parameterType="TDataSupplier" resultMap="TDataSupplierResult">
-        <include refid="selectTDataSupplierVo"/>
+    <select id="selectTSupplierList" parameterType="TSupplier" resultMap="TSupplierResult">
+        <include refid="selectTSupplierVo"/>
         <where>  
             <if test="supplierName != null  and supplierName != ''"> and SUPPLIER_NAME like concat('%', #{supplierName}, '%')</if>
             <if test="creditCode != null "> and CREDIT_CODE = #{creditCode}</if>
@@ -50,12 +50,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectTDataSupplierById" parameterType="Long" resultMap="TDataSupplierResult">
-        <include refid="selectTDataSupplierVo"/>
+    <select id="selectTSupplierById" parameterType="Long" resultMap="TSupplierResult">
+        <include refid="selectTSupplierVo"/>
         where ID = #{id}
     </select>
         
-    <insert id="insertTDataSupplier" parameterType="TDataSupplier" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertTSupplier" parameterType="TSupplier" useGeneratedKeys="true" keyProperty="id">
         insert into t_data_supplier
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="supplierName != null and supplierName != ''">SUPPLIER_NAME,</if>
@@ -95,7 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateTDataSupplier" parameterType="TDataSupplier">
+    <update id="updateTSupplier" parameterType="TSupplier">
         update t_data_supplier
         <trim prefix="SET" suffixOverrides=",">
             <if test="supplierName != null and supplierName != ''">SUPPLIER_NAME = #{supplierName},</if>
@@ -118,11 +118,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where ID = #{id}
     </update>
 
-    <delete id="deleteTDataSupplierById" parameterType="Long">
+    <delete id="deleteTSupplierById" parameterType="Long">
         delete from t_data_supplier where ID = #{id}
     </delete>
 
-    <delete id="deleteTDataSupplierByIds" parameterType="String">
+    <delete id="deleteTSupplierByIds" parameterType="String">
         delete from t_data_supplier where ID in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
