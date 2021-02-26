@@ -117,7 +117,18 @@ export const constantRoutes = [
         meta: { title: '修改生成配置' }
       }
     ]
+  },
+  {
+    path: '/system/supplier/add',
+    hidden: true,
+    children: [
+      {
+        path: 'add',
+        component: (resolve) => require(['@/views/system/supplier/addSupplierInfo'], resolve),
+      }
+    ],
   }
+
 ]
 
 export default new Router({
