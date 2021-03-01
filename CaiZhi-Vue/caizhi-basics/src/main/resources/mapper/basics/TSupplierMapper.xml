@@ -22,31 +22,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="businessLicense"    column="BUSINESS_LICENSE"    />
         <result property="accountOpeningCertificate"    column="ACCOUNT_OPENING_CERTIFICATE"    />
         <result property="publicMailbox"    column="PUBLIC_MAILBOX"    />
+        <result property="name"    column="NAME"    />
     </resultMap>
 
     <sql id="selectTSupplierVo">
-        select ID, SUPPLIER_NAME, CREDIT_CODE, ADDRESS, CAPITAL, SOURCE, LEVEL, PHONE, EMAIL, START_DATE, END_DATE, STATUS, REMARK, QUALIFICATIONS_FILE, BUSINESS_LICENSE, ACCOUNT_OPENING_CERTIFICATE, PUBLIC_MAILBOX from t_data_supplier
+        select ID, SUPPLIER_NAME, CREDIT_CODE, ADDRESS, CAPITAL, SOURCE, LEVEL, PHONE, EMAIL, START_DATE, END_DATE, STATUS, REMARK, QUALIFICATIONS_FILE, BUSINESS_LICENSE, ACCOUNT_OPENING_CERTIFICATE, PUBLIC_MAILBOX, NAME from t_data_supplier
     </sql>
 
     <select id="selectTSupplierList" parameterType="TSupplier" resultMap="TSupplierResult">
         <include refid="selectTSupplierVo"/>
         <where>  
             <if test="supplierName != null  and supplierName != ''"> and SUPPLIER_NAME like concat('%', #{supplierName}, '%')</if>
-            <if test="creditCode != null "> and CREDIT_CODE = #{creditCode}</if>
+            <if test="creditCode != null  and creditCode != ''"> and CREDIT_CODE = #{creditCode}</if>
             <if test="address != null  and address != ''"> and ADDRESS = #{address}</if>
             <if test="capital != null "> and CAPITAL = #{capital}</if>
             <if test="source != null  and source != ''"> and SOURCE = #{source}</if>
             <if test="level != null  and level != ''"> and LEVEL = #{level}</if>
             <if test="phone != null "> and PHONE = #{phone}</if>
             <if test="email != null  and email != ''"> and EMAIL = #{email}</if>
-            <if test="startDate != null "> and START_DATE &gt;= #{startDate}</if>
-            <if test="endDate != null "> and END_DATE &lt;= #{endDate}</if>
+            <if test="startDate != null "> and START_DATE = #{startDate}</if>
+            <if test="endDate != null "> and END_DATE = #{endDate}</if>
             <if test="status != null  and status != ''"> and STATUS = #{status}</if>
             <if test="remark != null  and remark != ''"> and REMARK = #{remark}</if>
             <if test="qualificationsFile != null  and qualificationsFile != ''"> and QUALIFICATIONS_FILE = #{qualificationsFile}</if>
             <if test="businessLicense != null  and businessLicense != ''"> and BUSINESS_LICENSE = #{businessLicense}</if>
             <if test="accountOpeningCertificate != null  and accountOpeningCertificate != ''"> and ACCOUNT_OPENING_CERTIFICATE = #{accountOpeningCertificate}</if>
             <if test="publicMailbox != null  and publicMailbox != ''"> and PUBLIC_MAILBOX = #{publicMailbox}</if>
+            <if test="name != null  and name != ''"> and NAME like concat('%', #{name}, '%')</if>
         </where>
     </select>
     
@@ -74,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="businessLicense != null">BUSINESS_LICENSE,</if>
             <if test="accountOpeningCertificate != null">ACCOUNT_OPENING_CERTIFICATE,</if>
             <if test="publicMailbox != null">PUBLIC_MAILBOX,</if>
+            <if test="name != null">NAME,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="supplierName != null and supplierName != ''">#{supplierName},</if>
@@ -92,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="businessLicense != null">#{businessLicense},</if>
             <if test="accountOpeningCertificate != null">#{accountOpeningCertificate},</if>
             <if test="publicMailbox != null">#{publicMailbox},</if>
+            <if test="name != null">#{name},</if>
          </trim>
     </insert>
 
@@ -114,6 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="businessLicense != null">BUSINESS_LICENSE = #{businessLicense},</if>
             <if test="accountOpeningCertificate != null">ACCOUNT_OPENING_CERTIFICATE = #{accountOpeningCertificate},</if>
             <if test="publicMailbox != null">PUBLIC_MAILBOX = #{publicMailbox},</if>
+            <if test="name != null">NAME = #{name},</if>
         </trim>
         where ID = #{id}
     </update>
