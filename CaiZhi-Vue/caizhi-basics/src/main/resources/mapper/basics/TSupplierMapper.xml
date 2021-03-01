@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.caizhi.system.mapper.TDataSupplierMapper">
+<mapper namespace="com.caizhi.basics.mapper.TSupplierMapper">
     
-    <resultMap type="TDataSupplier" id="TDataSupplierResult">
+    <resultMap type="TSupplier" id="TSupplierResult">
         <result property="id"    column="ID"    />
         <result property="supplierName"    column="SUPPLIER_NAME"    />
         <result property="creditCode"    column="CREDIT_CODE"    />
@@ -22,40 +22,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="businessLicense"    column="BUSINESS_LICENSE"    />
         <result property="accountOpeningCertificate"    column="ACCOUNT_OPENING_CERTIFICATE"    />
         <result property="publicMailbox"    column="PUBLIC_MAILBOX"    />
+        <result property="name"    column="NAME"    />
     </resultMap>
 
-    <sql id="selectTDataSupplierVo">
-        select ID, SUPPLIER_NAME, CREDIT_CODE, ADDRESS, CAPITAL, SOURCE, LEVEL, PHONE, EMAIL, START_DATE, END_DATE, STATUS, REMARK, QUALIFICATIONS_FILE, BUSINESS_LICENSE, ACCOUNT_OPENING_CERTIFICATE, PUBLIC_MAILBOX from t_data_supplier
+    <sql id="selectTSupplierVo">
+        select ID, SUPPLIER_NAME, CREDIT_CODE, ADDRESS, CAPITAL, SOURCE, LEVEL, PHONE, EMAIL, START_DATE, END_DATE, STATUS, REMARK, QUALIFICATIONS_FILE, BUSINESS_LICENSE, ACCOUNT_OPENING_CERTIFICATE, PUBLIC_MAILBOX, NAME from t_data_supplier
     </sql>
 
-    <select id="selectTDataSupplierList" parameterType="TDataSupplier" resultMap="TDataSupplierResult">
-        <include refid="selectTDataSupplierVo"/>
+    <select id="selectTSupplierList" parameterType="TSupplier" resultMap="TSupplierResult">
+        <include refid="selectTSupplierVo"/>
         <where>  
             <if test="supplierName != null  and supplierName != ''"> and SUPPLIER_NAME like concat('%', #{supplierName}, '%')</if>
-            <if test="creditCode != null "> and CREDIT_CODE = #{creditCode}</if>
+            <if test="creditCode != null  and creditCode != ''"> and CREDIT_CODE = #{creditCode}</if>
             <if test="address != null  and address != ''"> and ADDRESS = #{address}</if>
             <if test="capital != null "> and CAPITAL = #{capital}</if>
             <if test="source != null  and source != ''"> and SOURCE = #{source}</if>
             <if test="level != null  and level != ''"> and LEVEL = #{level}</if>
             <if test="phone != null "> and PHONE = #{phone}</if>
             <if test="email != null  and email != ''"> and EMAIL = #{email}</if>
-            <if test="startDate != null "> and START_DATE &gt;= #{startDate}</if>
-            <if test="endDate != null "> and END_DATE &lt;= #{endDate}</if>
+            <if test="startDate != null "> and START_DATE = #{startDate}</if>
+            <if test="endDate != null "> and END_DATE = #{endDate}</if>
             <if test="status != null  and status != ''"> and STATUS = #{status}</if>
             <if test="remark != null  and remark != ''"> and REMARK = #{remark}</if>
             <if test="qualificationsFile != null  and qualificationsFile != ''"> and QUALIFICATIONS_FILE = #{qualificationsFile}</if>
             <if test="businessLicense != null  and businessLicense != ''"> and BUSINESS_LICENSE = #{businessLicense}</if>
             <if test="accountOpeningCertificate != null  and accountOpeningCertificate != ''"> and ACCOUNT_OPENING_CERTIFICATE = #{accountOpeningCertificate}</if>
             <if test="publicMailbox != null  and publicMailbox != ''"> and PUBLIC_MAILBOX = #{publicMailbox}</if>
+            <if test="name != null  and name != ''"> and NAME like concat('%', #{name}, '%')</if>
         </where>
     </select>
     
-    <select id="selectTDataSupplierById" parameterType="Long" resultMap="TDataSupplierResult">
-        <include refid="selectTDataSupplierVo"/>
+    <select id="selectTSupplierById" parameterType="Long" resultMap="TSupplierResult">
+        <include refid="selectTSupplierVo"/>
         where ID = #{id}
     </select>
         
-    <insert id="insertTDataSupplier" parameterType="TDataSupplier" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertTSupplier" parameterType="TSupplier" useGeneratedKeys="true" keyProperty="id">
         insert into t_data_supplier
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="supplierName != null and supplierName != ''">SUPPLIER_NAME,</if>
@@ -74,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="businessLicense != null">BUSINESS_LICENSE,</if>
             <if test="accountOpeningCertificate != null">ACCOUNT_OPENING_CERTIFICATE,</if>
             <if test="publicMailbox != null">PUBLIC_MAILBOX,</if>
+            <if test="name != null">NAME,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="supplierName != null and supplierName != ''">#{supplierName},</if>
@@ -92,10 +95,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="businessLicense != null">#{businessLicense},</if>
             <if test="accountOpeningCertificate != null">#{accountOpeningCertificate},</if>
             <if test="publicMailbox != null">#{publicMailbox},</if>
+            <if test="name != null">#{name},</if>
          </trim>
     </insert>
 
-    <update id="updateTDataSupplier" parameterType="TDataSupplier">
+    <update id="updateTSupplier" parameterType="TSupplier">
         update t_data_supplier
         <trim prefix="SET" suffixOverrides=",">
             <if test="supplierName != null and supplierName != ''">SUPPLIER_NAME = #{supplierName},</if>
@@ -114,15 +118,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="businessLicense != null">BUSINESS_LICENSE = #{businessLicense},</if>
             <if test="accountOpeningCertificate != null">ACCOUNT_OPENING_CERTIFICATE = #{accountOpeningCertificate},</if>
             <if test="publicMailbox != null">PUBLIC_MAILBOX = #{publicMailbox},</if>
+            <if test="name != null">NAME = #{name},</if>
         </trim>
         where ID = #{id}
     </update>
 
-    <delete id="deleteTDataSupplierById" parameterType="Long">
+    <delete id="deleteTSupplierById" parameterType="Long">
         delete from t_data_supplier where ID = #{id}
     </delete>
 
-    <delete id="deleteTDataSupplierByIds" parameterType="String">
+    <delete id="deleteTSupplierByIds" parameterType="String">
         delete from t_data_supplier where ID in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}

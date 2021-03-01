@@ -7,7 +7,7 @@ import com.caizhi.basics.domain.TSupplier;
  * 供应商信息Mapper接口
  * 
  * @author caizhi
- * @date 2020-12-31
+ * @date 2021-03-01
  */
 public interface TSupplierMapper 
 {
