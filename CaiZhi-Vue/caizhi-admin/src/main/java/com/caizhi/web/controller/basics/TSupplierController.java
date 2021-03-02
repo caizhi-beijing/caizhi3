@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api("供应商信息")
 @RestController
-@RequestMapping("/system/supplier")
+@RequestMapping("/basics/supplier")
 public class TSupplierController extends BaseController {
 	@Autowired
 	private ITSupplierService tSupplierService;
@@ -42,7 +42,7 @@ public class TSupplierController extends BaseController {
 	/**
 	 * 查询供应商信息列表
 	 */
-	@PreAuthorize("@ss.hasPermi('system:supplier:list')")
+	@PreAuthorize("@ss.hasPermi('basics:supplier:list')")
 	@GetMapping("/list")
 	@ApiOperation("查询供应商信息列表")
 	@ApiImplicitParam(name = "tSupplier", value = "查询供应商信息列表", dataType = "TSupplier")
@@ -55,7 +55,7 @@ public class TSupplierController extends BaseController {
 	/**
 	 * 导出供应商信息列表
 	 */
-	@PreAuthorize("@ss.hasPermi('system:supplier:export')")
+	@PreAuthorize("@ss.hasPermi('basics:supplier:export')")
 	@Log(title = "供应商信息", businessType = BusinessType.EXPORT)
 	@GetMapping("/export")
 	@ApiOperation("导出供应商信息列表")
@@ -69,7 +69,7 @@ public class TSupplierController extends BaseController {
 	/**
 	 * 获取供应商信息详细信息
 	 */
-	@PreAuthorize("@ss.hasPermi('system:supplier:query')")
+	@PreAuthorize("@ss.hasPermi('basics:supplier:query')")
 	@GetMapping(value = "/{id}")
 	@ApiOperation("获取供应商信息详细信息")
 	@ApiImplicitParam(name = "id", value = "获取供应商信息详细信息", dataType = "long")
@@ -80,7 +80,7 @@ public class TSupplierController extends BaseController {
 	/**
 	 * 新增供应商信息
 	 */
-	@PreAuthorize("@ss.hasPermi('system:supplier:add')")
+	@PreAuthorize("@ss.hasPermi('basics:supplier:add')")
 	@Log(title = "供应商信息", businessType = BusinessType.INSERT)
 	@PostMapping
 	@ApiOperation("新增供应商信息")
@@ -92,7 +92,7 @@ public class TSupplierController extends BaseController {
 	/**
 	 * 修改供应商信息
 	 */
-	@PreAuthorize("@ss.hasPermi('system:supplier:edit')")
+	@PreAuthorize("@ss.hasPermi('basics:supplier:edit')")
 	@Log(title = "供应商信息", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@ApiOperation("修改供应商信息")
@@ -104,7 +104,7 @@ public class TSupplierController extends BaseController {
 	/**
 	 * 删除供应商信息
 	 */
-	@PreAuthorize("@ss.hasPermi('system:supplier:remove')")
+	@PreAuthorize("@ss.hasPermi('basics:supplier:remove')")
 	@Log(title = "供应商信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
 	@ApiOperation("删除供应商信息")

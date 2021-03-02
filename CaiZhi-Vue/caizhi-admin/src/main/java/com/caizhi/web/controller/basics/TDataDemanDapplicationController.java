@@ -43,7 +43,7 @@ public class TDataDemanDapplicationController extends BaseController
     /**
      * 查询需求审批列表
      */
-    @PreAuthorize("@ss.hasPermi('system:dapplication:list')")
+    @PreAuthorize("@ss.hasPermi('basics:dapplication:list')")
     @GetMapping("/list")
     @ApiOperation("查询需求审批列表")
 	@ApiImplicitParam(name = "tDataDemanDapplication", value = "查询需求审批列表", dataType = "TDataDemanDapplication")
