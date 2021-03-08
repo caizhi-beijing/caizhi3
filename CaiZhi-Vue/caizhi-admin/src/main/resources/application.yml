@@ -36,8 +36,11 @@ logging:
     com.caizhi: debug
     org.springframework: warn
 
-# Spring配置
-spring:
+spring: 
+  mail: 
+    host: smtp.qq.com 
+    username: 1763294890@qq.com
+    #password: bztbjvoupwvafchh
   # 资源信息
   messages:
     # 国际化资源文件路径

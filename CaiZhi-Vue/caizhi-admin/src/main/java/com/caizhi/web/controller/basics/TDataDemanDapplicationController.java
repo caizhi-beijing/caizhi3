@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.caizhi.basics.domain.TDataAcceptRequire;
 import com.caizhi.basics.domain.TDataDemanDapplication;
+import com.caizhi.basics.service.ITDataAcceptRequireService;
 import com.caizhi.basics.service.ITDataDemanDapplicationService;
 import com.caizhi.common.annotation.Log;
+import com.caizhi.common.constant.AcceptRequireConstants;
 import com.caizhi.common.constant.ApprvalStatusConstants;
 import com.caizhi.common.core.controller.BaseController;
 import com.caizhi.common.core.domain.AjaxResult;
 import com.caizhi.common.core.page.TableDataInfo;
 import com.caizhi.common.enums.BusinessType;
+import com.caizhi.common.utils.SnowFlakeUtil;
 import com.caizhi.common.utils.poi.ExcelUtil;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,6 +43,12 @@ public class TDataDemanDapplicationController extends BaseController
 {
     @Autowired
     private ITDataDemanDapplicationService tDataDemanDapplicationService;
+    
+    /**
+     * 需求接收的service
+     */
+    @Autowired
+    private ITDataAcceptRequireService tDataAcceptRequireService;
 
     /**
      * 查询需求审批列表
@@ -91,6 +101,9 @@ public class TDataDemanDapplicationController extends BaseController
 	@ApiImplicitParam(name = "tDataDemanDapplication", value = "新增需求审批", dataType = "TDataDemanDapplication")
     public AjaxResult add(@RequestBody TDataDemanDapplication tDataDemanDapplication , String flag)
     {
+    	//新建的时候自动生成需求编号
+    	String requireNumber = String.valueOf(SnowFlakeUtil.getId());
+    	tDataDemanDapplication.setRequireNumber(requireNumber);
     	//新建数据如果是提交默认是待审批（2），如果是保存未提交默认是起草（1）
     	//flag 的值 保存传1 ，提交传2
     	String status = "";
@@ -126,6 +139,11 @@ public class TDataDemanDapplicationController extends BaseController
     public AjaxResult appravl(@RequestBody TDataDemanDapplication tDataDemanDapplication)
     {
     	tDataDemanDapplication.setStatus(ApprvalStatusConstants.THREE);
+    	//同意的时候将信息加到需求接收的表中
+    	TDataAcceptRequire tDataAcceptRequire = new TDataAcceptRequire();
+    	tDataAcceptRequire.setRequireId(tDataDemanDapplication.getId());
+    	tDataAcceptRequire.setStatus(AcceptRequireConstants.ONE);
+    	tDataAcceptRequireService.insertTDataAcceptRequire(tDataAcceptRequire);
         return toAjax(tDataDemanDapplicationService.updateTDataDemanDapplication(tDataDemanDapplication));
     }
     
@@ -168,6 +186,17 @@ public class TDataDemanDapplicationController extends BaseController
     public AjaxResult close(@RequestBody TDataDemanDapplication tDataDemanDapplication)
     {
     	tDataDemanDapplication.setStatus(ApprvalStatusConstants.SIX);
+    	//关闭的时候将信息加到需求接收的表中
+    	TDataAcceptRequire tDataAcceptRequire = new TDataAcceptRequire();
+    	tDataAcceptRequire.setRequireId(tDataDemanDapplication.getId());
+    	tDataAcceptRequire.setStatus(AcceptRequireConstants.FORE);
+    	List<TDataAcceptRequire> list = tDataAcceptRequireService.selectTDataAcceptRequireList(tDataAcceptRequire);
+    	if(list != null && list.size() >0) {
+    		tDataAcceptRequireService.updateTDataAcceptRequire(tDataAcceptRequire);
+    	}else {
+    		tDataAcceptRequireService.insertTDataAcceptRequire(tDataAcceptRequire);
+    	}
+    	
         return toAjax(tDataDemanDapplicationService.updateTDataDemanDapplication(tDataDemanDapplication));
     }
     
@@ -182,6 +211,11 @@ public class TDataDemanDapplicationController extends BaseController
     public AjaxResult release(@RequestBody TDataDemanDapplication tDataDemanDapplication)
     {
     	tDataDemanDapplication.setStatus(ApprvalStatusConstants.FOUR);
+    	//发布的时候将信息加到需求接收的表中
+    	TDataAcceptRequire tDataAcceptRequire = new TDataAcceptRequire();
+    	tDataAcceptRequire.setRequireId(tDataDemanDapplication.getId());
+    	tDataAcceptRequire.setStatus(AcceptRequireConstants.ONE);
+    	tDataAcceptRequireService.insertTDataAcceptRequire(tDataAcceptRequire);
         return toAjax(tDataDemanDapplicationService.updateTDataDemanDapplication(tDataDemanDapplication));
     }
 

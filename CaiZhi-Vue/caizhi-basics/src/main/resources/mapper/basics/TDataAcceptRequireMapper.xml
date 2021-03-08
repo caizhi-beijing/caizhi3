@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caizhi.basics.mapper.TDataAcceptRequireMapper">
+    
+    <resultMap type="TDataAcceptRequire" id="TDataAcceptRequireResult">
+        <result property="id"    column="ID"    />
+        <result property="requireId"    column="REQUIRE_ID"    />
+        <result property="status"    column="STATUS"    />
+        <result property="createBy"      column="create_by"      />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"      column="update_by"      />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+    
+    <resultMap type="TDataAcceptRequireDTO" id="TDataDemanDapplicationDTOResult">
+        <result property="id"    column="ID"    />
+        <result property="requireNumber"    column="REQUIRE_NUMBER"    />
+        <result property="deptId"    column="DEPT_ID"    />
+        <result property="deptName"    column="DEPT_NAME"    />
+        <result property="projectName"    column="PROJECT_NAME"    />
+        <result property="postType"    column="POST_TYPE"    />
+        <result property="postName"    column="POST_NAME"    />
+        <result property="level"    column="LEVEL"    />
+        <result property="amount"    column="AMOUNT"    />
+        <result property="urgency"    column="URGENCY"    />
+        <result property="contactName"    column="CONTACT_NAME"    />
+        <result property="contactPhone"    column="CONTACT_PHONE"    />
+        <result property="supplierScope"    column="SUPPLIER_SCOPE"    />
+        <result property="interviewer"    column="INTERVIEWER"    />
+        <result property="plannedAppravlTime"    column="PLANNED_APPRAVL_TIME"    />
+        <result property="supplierScopeId"    column="SUPPLIER_SCOPE_ID"    />
+        <result property="jobDesc"    column="JOB_DESC"    />
+        <result property="jobRequired"    column="JOB_REQUIRED"    />
+        <result property="plannedLifeCycle"    column="PLANNED_LIFE_CYCLE"    />
+        <result property="applicant"    column="APPLICANT"    />
+        <result property="applicationTime"    column="APPLICATION_TIME"    />
+        <result property="status"    column="STATUS"    />
+        <result property="remark"    column="REMARK"    />
+        <result property="releaseTime"    column="RELEASE_TIME"    />
+        <result property="releaseTimeFlag"    column="RELEASE_TIME_FLAG"    />
+        <result property="createBy"      column="create_by"      />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"      column="update_by"      />
+        <result property="updateTime"    column="update_time"    />
+        <result property="statusOfRequire"    column="STATUS_OF_REQUIRE"    />
+    </resultMap>
+
+    <sql id="selectTDataAcceptRequireVo">
+        select ID, REQUIRE_ID, STATUS , create_by, create_time, update_by, update_time from t_data_accept_require
+    </sql>
+
+    <select id="selectTDataAcceptRequireList" parameterType="TDataAcceptRequire" resultMap="TDataAcceptRequireResult">
+        <include refid="selectTDataAcceptRequireVo"/>
+        <where>  
+            <if test="requireId != null "> and REQUIRE_ID = #{requireId}</if>
+            <if test="status != null  and status != ''"> and STATUS = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTDataAcceptRequireById" parameterType="Long" resultMap="TDataDemanDapplicationDTOResult">
+       select a.ID, REQUIRE_NUMBER, DEPT_ID, DEPT_NAME, PROJECT_NAME, POST_TYPE, POST_NAME, LEVEL, AMOUNT, URGENCY, CONTACT_NAME, 
+        CONTACT_PHONE, SUPPLIER_SCOPE, INTERVIEWER, PLANNED_APPRAVL_TIME, SUPPLIER_SCOPE_ID, JOB_DESC, JOB_REQUIRED, 
+        PLANNED_LIFE_CYCLE, APPLICANT, APPLICATION_TIME, a.STATUS, REMARK, RELEASE_TIME, RELEASE_TIME_FLAG 
+        , b.update_by, b.update_time, b.STATUS STATUS_OF_REQUIRE from t_data_deman_dapplication a inner join t_data_accept_require b
+        on a.ID = b.REQUIRE_ID 
+        where a.ID = #{id}
+    </select>
+        
+    <!-- 查询待接收，已接受，已拒收的需求 -->
+    <select id="selectAcceptOrRefuseRequire" parameterType="java.lang.String" resultMap="TDataDemanDapplicationDTOResult">
+        select a.ID, REQUIRE_NUMBER, DEPT_ID, DEPT_NAME, PROJECT_NAME, POST_TYPE, POST_NAME, LEVEL, AMOUNT, URGENCY, CONTACT_NAME, 
+        CONTACT_PHONE, SUPPLIER_SCOPE, INTERVIEWER, PLANNED_APPRAVL_TIME, SUPPLIER_SCOPE_ID, JOB_DESC, JOB_REQUIRED, 
+        PLANNED_LIFE_CYCLE, APPLICANT, APPLICATION_TIME, a.STATUS, REMARK, RELEASE_TIME, RELEASE_TIME_FLAG 
+        , b.update_by, b.update_time, b.STATUS STATUS_OF_REQUIRE from t_data_deman_dapplication a inner join t_data_accept_require b
+        on a.ID = b.REQUIRE_ID where b.status = #{status} 
+    </select>
+    
+     <!-- 查询已关闭的需求 -->
+    <select id="selectCloseRequire" resultMap="TDataDemanDapplicationDTOResult">
+        select a.ID, REQUIRE_NUMBER, DEPT_ID, DEPT_NAME, PROJECT_NAME, POST_TYPE, POST_NAME, LEVEL, AMOUNT, URGENCY, CONTACT_NAME, 
+        CONTACT_PHONE, SUPPLIER_SCOPE, INTERVIEWER, PLANNED_APPRAVL_TIME, SUPPLIER_SCOPE_ID, JOB_DESC, JOB_REQUIRED, 
+        PLANNED_LIFE_CYCLE, APPLICANT, APPLICATION_TIME, a.STATUS, REMARK, RELEASE_TIME, RELEASE_TIME_FLAG 
+        , b.update_by, b.update_time, b.STATUS STATUS_OF_REQUIRE from t_data_deman_dapplication a inner join t_data_accept_require b
+        on a.ID = b.REQUIRE_ID where b.status = '4'
+    </select>
+    
+     <!-- 查询所有的需求 -->
+    <select id="selectAllRequire"  resultMap="TDataDemanDapplicationDTOResult">
+        select a.ID, REQUIRE_NUMBER, DEPT_ID, DEPT_NAME, PROJECT_NAME, POST_TYPE, POST_NAME, LEVEL, AMOUNT, URGENCY, CONTACT_NAME, 
+        CONTACT_PHONE, SUPPLIER_SCOPE, INTERVIEWER, PLANNED_APPRAVL_TIME, SUPPLIER_SCOPE_ID, JOB_DESC, JOB_REQUIRED, 
+        PLANNED_LIFE_CYCLE, APPLICANT, APPLICATION_TIME, a.STATUS, REMARK, RELEASE_TIME, RELEASE_TIME_FLAG 
+        , b.update_by, b.update_time, b.STATUS STATUS_OF_REQUIRE from t_data_deman_dapplication a inner join t_data_accept_require b
+        on a.ID = b.REQUIRE_ID 
+    </select>
+    
+    <insert id="insertTDataAcceptRequire" parameterType="TDataAcceptRequire" useGeneratedKeys="true" keyProperty="id">
+        insert into t_data_accept_require
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="requireId != null">REQUIRE_ID,</if>
+            <if test="status != null">STATUS,</if>
+            <if test="createTime != null ">create_Time,</if>
+			<if test="createBy != null and createBy != ''">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="requireId != null">#{requireId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null ">#{createTime},</if>
+			<if test="createBy != null and createBy != ''">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTDataAcceptRequire" parameterType="TDataAcceptRequire">
+        update t_data_accept_require
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="requireId != null">REQUIRE_ID = #{requireId},</if>
+            <if test="status != null">STATUS = #{status},</if>
+            <if test="updateTime != null ">CREATE_TIME =#{updateTime},</if>
+			<if test="updateBy != null and updateBy != ''">UPDATE_BY =#{updateBy},</if>
+        </trim>
+        where ID = #{id}
+    </update>
+    
+    <update id="acceptOrRefuseRequire" parameterType="TDataAcceptRequire">
+        update t_data_accept_require
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="status != null">STATUS = #{status},</if>
+            <if test="updateTime != null ">CREATE_TIME =#{updateTime},</if>
+			<if test="updateBy != null and updateBy != ''">UPDATE_BY =#{updateBy},</if>
+        </trim>
+        where REQUIRE_ID = #{requireId}
+    </update>
+
+    <delete id="deleteTDataAcceptRequireById" parameterType="Long">
+        delete from t_data_accept_require where ID = #{id}
+    </delete>
+
+    <delete id="deleteTDataAcceptRequireByIds" parameterType="String">
+        delete from t_data_accept_require where ID in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

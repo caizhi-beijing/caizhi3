@@ -1,10 +1,12 @@
 package com.caizhi.basics.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.caizhi.basics.mapper.TDataDemanDapplicationMapper;
+
 import com.caizhi.basics.domain.TDataDemanDapplication;
+import com.caizhi.basics.mapper.TDataDemanDapplicationMapper;
 import com.caizhi.basics.service.ITDataDemanDapplicationService;
 
 /**

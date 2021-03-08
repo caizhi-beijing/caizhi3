@@ -23,10 +23,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="accountOpeningCertificate"    column="ACCOUNT_OPENING_CERTIFICATE"    />
         <result property="publicMailbox"    column="PUBLIC_MAILBOX"    />
         <result property="name"    column="NAME"    />
+        <result property="createBy"      column="create_by"      />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"      column="update_by"      />
+        <result property="updateTime"    column="update_time"    />
     </resultMap>
 
     <sql id="selectTSupplierVo">
-        select ID, SUPPLIER_NAME, CREDIT_CODE, ADDRESS, CAPITAL, SOURCE, LEVEL, PHONE, EMAIL, START_DATE, END_DATE, STATUS, REMARK, QUALIFICATIONS_FILE, BUSINESS_LICENSE, ACCOUNT_OPENING_CERTIFICATE, PUBLIC_MAILBOX, NAME from t_data_supplier
+        select ID, SUPPLIER_NAME, CREDIT_CODE, ADDRESS, CAPITAL, SOURCE, LEVEL, PHONE, EMAIL, START_DATE, END_DATE, STATUS, 
+        REMARK, QUALIFICATIONS_FILE, BUSINESS_LICENSE, ACCOUNT_OPENING_CERTIFICATE, PUBLIC_MAILBOX, NAME , create_by, 
+        create_time, update_by, update_time from t_data_supplier
     </sql>
 
     <select id="selectTSupplierList" parameterType="TSupplier" resultMap="TSupplierResult">
@@ -77,6 +83,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="accountOpeningCertificate != null">ACCOUNT_OPENING_CERTIFICATE,</if>
             <if test="publicMailbox != null">PUBLIC_MAILBOX,</if>
             <if test="name != null">NAME,</if>
+            <if test="createTime != null ">create_Time,</if>
+			<if test="createBy != null and createBy != ''">create_by,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="supplierName != null and supplierName != ''">#{supplierName},</if>
@@ -96,6 +104,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="accountOpeningCertificate != null">#{accountOpeningCertificate},</if>
             <if test="publicMailbox != null">#{publicMailbox},</if>
             <if test="name != null">#{name},</if>
+            <if test="createTime != null ">#{createTime},</if>
+			<if test="createBy != null and createBy != ''">#{createBy},</if>
          </trim>
     </insert>
 
@@ -119,6 +129,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="accountOpeningCertificate != null">ACCOUNT_OPENING_CERTIFICATE = #{accountOpeningCertificate},</if>
             <if test="publicMailbox != null">PUBLIC_MAILBOX = #{publicMailbox},</if>
             <if test="name != null">NAME = #{name},</if>
+            <if test="updateTime != null ">CREATE_TIME =#{updateTime},</if>
+			<if test="updateBy != null and updateBy != ''">UPDATE_BY =#{updateBy},</if>
         </trim>
         where ID = #{id}
     </update>

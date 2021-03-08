@@ -8,7 +8,7 @@ export default [
       {
         path: 'addSupplier',
         component: () =>
-          import('@/views/system/supplier/addSupplierInfo'),
+          import('@/views/basics/supplier/addSupplierComponent'),
       }
     ],
   }

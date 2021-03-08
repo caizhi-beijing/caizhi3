@@ -1,18 +1,26 @@
 import request from '@/utils/request'
-
-// 查询供应商信息列表
+let requestTips = '/basics/supplier'
+// 查询供应商列表
 export function listSupplier(query) {
   return request({
-    url: '/basics/supplier/list',
+    url: `${requestTips}/list`,
     method: 'get',
     params: query
+  })
+}
+
+export function upload(data) {
+  return request({
+    url: '/common/upload',
+    method: 'post',
+    data: data
   })
 }
 
 // 查询供应商信息详细
 export function getSupplier(id) {
   return request({
-    url: '/basics/supplier/' + id,
+    url: `${requestTips}/${id}`,
     method: 'get'
   })
 }
@@ -20,16 +28,16 @@ export function getSupplier(id) {
 // 新增供应商信息
 export function addSupplier(data) {
   return request({
-    url: '/basics/supplier',
+    url: `${requestTips}`,
     method: 'post',
     data: data
   })
 }
 
-// 修改供应商信息
+// 修改供应商信息-update
 export function updateSupplier(data) {
   return request({
-    url: '/basics/supplier',
+    url: `${requestTips}`,
     method: 'put',
     data: data
   })
@@ -38,7 +46,7 @@ export function updateSupplier(data) {
 // 删除供应商信息
 export function delSupplier(id) {
   return request({
-    url: '/basics/supplier/' + id,
+    url: `${requestTips}/${id}` ,
     method: 'delete'
   })
 }
@@ -46,8 +54,9 @@ export function delSupplier(id) {
 // 导出供应商信息
 export function exportSupplier(query) {
   return request({
-    url: '/basics/supplier/export',
+    url: `${requestTips}/export`,
     method: 'get',
     params: query
   })
 }
+

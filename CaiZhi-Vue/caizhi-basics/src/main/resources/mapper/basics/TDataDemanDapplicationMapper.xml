@@ -6,7 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="TDataDemanDapplication" id="TDataDemanDapplicationResult">
         <result property="id"    column="ID"    />
+        <result property="requireNumber"    column="REQUIRE_NUMBER"    />
         <result property="deptId"    column="DEPT_ID"    />
+        <result property="deptName"    column="DEPT_NAME"    />
         <result property="projectName"    column="PROJECT_NAME"    />
         <result property="postType"    column="POST_TYPE"    />
         <result property="postName"    column="POST_NAME"    />
@@ -18,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="supplierScope"    column="SUPPLIER_SCOPE"    />
         <result property="interviewer"    column="INTERVIEWER"    />
         <result property="plannedAppravlTime"    column="PLANNED_APPRAVL_TIME"    />
+        <result property="supplierScopeId"    column="SUPPLIER_SCOPE_ID"    />
         <result property="jobDesc"    column="JOB_DESC"    />
         <result property="jobRequired"    column="JOB_REQUIRED"    />
         <result property="plannedLifeCycle"    column="PLANNED_LIFE_CYCLE"    />
@@ -25,16 +28,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="applicationTime"    column="APPLICATION_TIME"    />
         <result property="status"    column="STATUS"    />
         <result property="remark"    column="REMARK"    />
+        <result property="releaseTime"    column="RELEASE_TIME"    />
+        <result property="releaseTimeFlag"    column="RELEASE_TIME_FLAG"    />
+        <result property="createBy"      column="create_by"      />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"      column="update_by"      />
+        <result property="updateTime"    column="update_time"    />
     </resultMap>
 
     <sql id="selectTDataDemanDapplicationVo">
-        select ID, DEPT_ID, PROJECT_NAME, POST_TYPE, POST_NAME, LEVEL, AMOUNT, URGENCY, CONTACT_NAME, CONTACT_PHONE, SUPPLIER_SCOPE, INTERVIEWER, PLANNED_APPRAVL_TIME, JOB_DESC, JOB_REQUIRED, PLANNED_LIFE_CYCLE, APPLICANT, APPLICATION_TIME, STATUS ,REMARK from t_data_deman_dapplication
+        select ID, REQUIRE_NUMBER, DEPT_ID, DEPT_NAME, PROJECT_NAME, POST_TYPE, POST_NAME, LEVEL, AMOUNT, URGENCY, CONTACT_NAME, 
+        CONTACT_PHONE, SUPPLIER_SCOPE, INTERVIEWER, PLANNED_APPRAVL_TIME, SUPPLIER_SCOPE_ID, JOB_DESC, JOB_REQUIRED, 
+        PLANNED_LIFE_CYCLE, APPLICANT, APPLICATION_TIME, STATUS, REMARK, RELEASE_TIME, RELEASE_TIME_FLAG 
+        , create_by, create_time, update_by, update_time from t_data_deman_dapplication
     </sql>
 
     <select id="selectTDataDemanDapplicationList" parameterType="TDataDemanDapplication" resultMap="TDataDemanDapplicationResult">
         <include refid="selectTDataDemanDapplicationVo"/>
         <where>  
+            <if test="requireNumber != null  and requireNumber != ''"> and REQUIRE_NUMBER = #{requireNumber}</if>
             <if test="deptId != null "> and DEPT_ID = #{deptId}</if>
+            <if test="deptName != null  and deptName != ''"> and DEPT_NAME like concat('%', #{deptName}, '%')</if>
             <if test="projectName != null  and projectName != ''"> and PROJECT_NAME like concat('%', #{projectName}, '%')</if>
             <if test="postType != null  and postType != ''"> and POST_TYPE = #{postType}</if>
             <if test="postName != null  and postName != ''"> and POST_NAME like concat('%', #{postName}, '%')</if>
@@ -46,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="supplierScope != null  and supplierScope != ''"> and SUPPLIER_SCOPE = #{supplierScope}</if>
             <if test="interviewer != null  and interviewer != ''"> and INTERVIEWER = #{interviewer}</if>
             <if test="plannedAppravlTime != null "> and PLANNED_APPRAVL_TIME = #{plannedAppravlTime}</if>
+            <if test="supplierScopeId != null  and supplierScopeId != ''"> and SUPPLIER_SCOPE_ID = #{supplierScopeId}</if>
             <if test="jobDesc != null  and jobDesc != ''"> and JOB_DESC = #{jobDesc}</if>
             <if test="jobRequired != null  and jobRequired != ''"> and JOB_REQUIRED = #{jobRequired}</if>
             <if test="plannedLifeCycle != null  and plannedLifeCycle != ''"> and PLANNED_LIFE_CYCLE = #{plannedLifeCycle}</if>
@@ -53,6 +68,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="applicationTime != null "> and APPLICATION_TIME = #{applicationTime}</if>
             <if test="status != null  and status != ''"> and STATUS = #{status}</if>
             <if test="remark != null  and remark != ''"> and REMARK = #{remark}</if>
+            <if test="releaseTime != null "> and RELEASE_TIME = #{releaseTime}</if>
+            <if test="releaseTimeFlag != null  and releaseTimeFlag != ''"> and RELEASE_TIME_FLAG = #{releaseTimeFlag}</if>
         </where>
     </select>
     
@@ -64,7 +81,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertTDataDemanDapplication" parameterType="TDataDemanDapplication" useGeneratedKeys="true" keyProperty="id">
         insert into t_data_deman_dapplication
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="requireNumber != null">REQUIRE_NUMBER,</if>
             <if test="deptId != null">DEPT_ID,</if>
+            <if test="deptName != null">DEPT_NAME,</if>
             <if test="projectName != null and projectName != ''">PROJECT_NAME,</if>
             <if test="postType != null and postType != ''">POST_TYPE,</if>
             <if test="postName != null and postName != ''">POST_NAME,</if>
@@ -76,16 +95,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="supplierScope != null and supplierScope != ''">SUPPLIER_SCOPE,</if>
             <if test="interviewer != null and interviewer != ''">INTERVIEWER,</if>
             <if test="plannedAppravlTime != null">PLANNED_APPRAVL_TIME,</if>
+            <if test="supplierScopeId != null">SUPPLIER_SCOPE_ID,</if>
             <if test="jobDesc != null and jobDesc != ''">JOB_DESC,</if>
             <if test="jobRequired != null and jobRequired != ''">JOB_REQUIRED,</if>
             <if test="plannedLifeCycle != null and plannedLifeCycle != ''">PLANNED_LIFE_CYCLE,</if>
             <if test="applicant != null and applicant != ''">APPLICANT,</if>
             <if test="applicationTime != null">APPLICATION_TIME,</if>
             <if test="status != null and status != ''">STATUS,</if>
-            <if test="remark != null and remark != ''">REMARK,</if>
+            <if test="remark != null">REMARK,</if>
+            <if test="releaseTime != null">RELEASE_TIME,</if>
+            <if test="releaseTimeFlag != null">RELEASE_TIME_FLAG,</if>
+             <if test="createTime != null ">CREATE_TIME,</if>
+			<if test="createBy != null and createBy != ''">CREATE_BY,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="requireNumber != null">#{requireNumber},</if>
             <if test="deptId != null">#{deptId},</if>
+            <if test="deptName != null">#{deptName},</if>
             <if test="projectName != null and projectName != ''">#{projectName},</if>
             <if test="postType != null and postType != ''">#{postType},</if>
             <if test="postName != null and postName != ''">#{postName},</if>
@@ -97,20 +123,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="supplierScope != null and supplierScope != ''">#{supplierScope},</if>
             <if test="interviewer != null and interviewer != ''">#{interviewer},</if>
             <if test="plannedAppravlTime != null">#{plannedAppravlTime},</if>
+            <if test="supplierScopeId != null">#{supplierScopeId},</if>
             <if test="jobDesc != null and jobDesc != ''">#{jobDesc},</if>
             <if test="jobRequired != null and jobRequired != ''">#{jobRequired},</if>
             <if test="plannedLifeCycle != null and plannedLifeCycle != ''">#{plannedLifeCycle},</if>
             <if test="applicant != null and applicant != ''">#{applicant},</if>
             <if test="applicationTime != null">#{applicationTime},</if>
             <if test="status != null and status != ''">#{status},</if>
-            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="releaseTime != null">#{releaseTime},</if>
+            <if test="releaseTimeFlag != null">#{releaseTimeFlag},</if>
+             <if test="createTime != null ">#{createTime},</if>
+			<if test="createBy != null and createBy != ''">#{createBy},</if>
          </trim>
     </insert>
 
     <update id="updateTDataDemanDapplication" parameterType="TDataDemanDapplication">
         update t_data_deman_dapplication
         <trim prefix="SET" suffixOverrides=",">
+            <if test="requireNumber != null">REQUIRE_NUMBER = #{requireNumber},</if>
             <if test="deptId != null">DEPT_ID = #{deptId},</if>
+            <if test="deptName != null">DEPT_NAME = #{deptName},</if>
             <if test="projectName != null and projectName != ''">PROJECT_NAME = #{projectName},</if>
             <if test="postType != null and postType != ''">POST_TYPE = #{postType},</if>
             <if test="postName != null and postName != ''">POST_NAME = #{postName},</if>
@@ -122,13 +155,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="supplierScope != null and supplierScope != ''">SUPPLIER_SCOPE = #{supplierScope},</if>
             <if test="interviewer != null and interviewer != ''">INTERVIEWER = #{interviewer},</if>
             <if test="plannedAppravlTime != null">PLANNED_APPRAVL_TIME = #{plannedAppravlTime},</if>
+            <if test="supplierScopeId != null">SUPPLIER_SCOPE_ID = #{supplierScopeId},</if>
             <if test="jobDesc != null and jobDesc != ''">JOB_DESC = #{jobDesc},</if>
             <if test="jobRequired != null and jobRequired != ''">JOB_REQUIRED = #{jobRequired},</if>
             <if test="plannedLifeCycle != null and plannedLifeCycle != ''">PLANNED_LIFE_CYCLE = #{plannedLifeCycle},</if>
             <if test="applicant != null and applicant != ''">APPLICANT = #{applicant},</if>
             <if test="applicationTime != null">APPLICATION_TIME = #{applicationTime},</if>
             <if test="status != null and status != ''">STATUS = #{status},</if>
-            <if test="remark != null  and remark != ''">REMARK = #{remark},</if>
+            <if test="remark != null">REMARK = #{remark},</if>
+            <if test="releaseTime != null">RELEASE_TIME = #{releaseTime},</if>
+            <if test="releaseTimeFlag != null">RELEASE_TIME_FLAG = #{releaseTimeFlag},</if>
+             <if test="updateTime != null ">CREATE_TIME =#{updateTime},</if>
+			<if test="updateBy != null and updateBy != ''">UPDATE_BY =#{updateBy},</if>
         </trim>
         where ID = #{id}
     </update>

@@ -1,6 +1,7 @@
 package com.caizhi.basics.service;
 
 import java.util.List;
+
 import com.caizhi.basics.domain.TSupplier;
 
 /**
@@ -26,6 +27,13 @@ public interface ITSupplierService
      * @return 供应商信息集合
      */
     public List<TSupplier> selectTSupplierList(TSupplier tSupplier);
+    
+    /**
+     * 查询所有供应商
+     * 
+     * @return 供应商信息集合
+     */
+    public List<TSupplier> selectTSupplierAll();
 
     /**
      * 新增供应商信息

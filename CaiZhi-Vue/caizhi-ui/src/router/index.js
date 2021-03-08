@@ -124,7 +124,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'add',
-        component: (resolve) => require(['@/views/system/supplier/addSupplierInfo'], resolve),
+        component: (resolve) => require(['@/views/basics/supplier/addSupplierComponent'], resolve),
       }
     ],
   }

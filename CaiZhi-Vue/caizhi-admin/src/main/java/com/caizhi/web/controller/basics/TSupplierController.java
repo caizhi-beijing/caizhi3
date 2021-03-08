@@ -112,4 +112,17 @@ public class TSupplierController extends BaseController {
 	public AjaxResult remove(@PathVariable Long[] ids) {
 		return toAjax(tSupplierService.deleteTSupplierByIds(ids));
 	}
+	
+	/**
+     * 供应商下拉框数据
+     */
+    @PreAuthorize("@ss.hasPermi('basics:supplier:query')")
+    @GetMapping("/optionselect")
+    @ApiOperation(" 供应商下拉框数据")
+	@ApiImplicitParam(value = " 供应商下拉框数据")
+    public List<TSupplier> optionselect()
+    {
+        return tSupplierService.selectTSupplierAll();
+    }
+	
 }

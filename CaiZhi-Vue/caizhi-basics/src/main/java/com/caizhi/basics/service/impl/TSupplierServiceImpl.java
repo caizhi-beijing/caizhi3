@@ -1,11 +1,14 @@
 package com.caizhi.basics.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.caizhi.basics.mapper.TSupplierMapper;
+
 import com.caizhi.basics.domain.TSupplier;
+import com.caizhi.basics.mapper.TSupplierMapper;
 import com.caizhi.basics.service.ITSupplierService;
+import com.caizhi.common.utils.spring.SpringUtils;
 
 /**
  * 供应商信息Service业务层处理
@@ -43,6 +46,17 @@ public class TSupplierServiceImpl implements ITSupplierService
         return tSupplierMapper.selectTSupplierList(tSupplier);
     }
 
+    /**
+     * 查询所有供应商
+     * 
+     * @return 供应商列表
+     */
+    @Override
+    public List<TSupplier> selectTSupplierAll()
+    {
+        return selectTSupplierList(new TSupplier());
+    }
+    
     /**
      * 新增供应商信息
      * 

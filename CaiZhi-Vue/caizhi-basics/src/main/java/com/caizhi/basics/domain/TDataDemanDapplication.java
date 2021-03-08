@@ -11,7 +11,7 @@ import com.caizhi.common.core.domain.BaseEntity;
  * 需求审批对象 t_data_deman_dapplication
  * 
  * @author caizhi
- * @date 2021-02-05
+ * @date 2021-03-04
  */
 public class TDataDemanDapplication extends BaseEntity
 {
@@ -20,9 +20,17 @@ public class TDataDemanDapplication extends BaseEntity
     /** 主键ID */
     private Long id;
 
+    /** 需求编号 */
+    @Excel(name = "需求编号")
+    private String requireNumber;
+
     /** 部门ID */
     @Excel(name = "部门ID")
     private Long deptId;
+
+    /** 部门名称 */
+    @Excel(name = "部门名称")
+    private String deptName;
 
     /** 项目名称 */
     @Excel(name = "项目名称")
@@ -69,6 +77,10 @@ public class TDataDemanDapplication extends BaseEntity
     @Excel(name = "计划进场时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date plannedAppravlTime;
 
+    /** 供应商范围id */
+    @Excel(name = "供应商范围id")
+    private String supplierScopeId;
+
     /** 工作说明 */
     @Excel(name = "工作说明")
     private String jobDesc;
@@ -93,10 +105,15 @@ public class TDataDemanDapplication extends BaseEntity
     /** 状态 */
     @Excel(name = "状态")
     private String status;
-    
-    /** 备注信息 */
-    @Excel(name = "备注信息")
-    private String remark;
+
+    /** 发布时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "发布时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date releaseTime;
+
+    /** 发布时间选项（1立即发布，2选择发布时间） */
+    @Excel(name = "发布时间选项", readConverterExp = "1=立即发布，2选择发布时间")
+    private String releaseTimeFlag;
 
     public void setId(Long id) 
     {
@@ -107,6 +124,15 @@ public class TDataDemanDapplication extends BaseEntity
     {
         return id;
     }
+    public void setRequireNumber(String requireNumber) 
+    {
+        this.requireNumber = requireNumber;
+    }
+
+    public String getRequireNumber() 
+    {
+        return requireNumber;
+    }
     public void setDeptId(Long deptId) 
     {
         this.deptId = deptId;
@@ -115,6 +141,15 @@ public class TDataDemanDapplication extends BaseEntity
     public Long getDeptId() 
     {
         return deptId;
+    }
+    public void setDeptName(String deptName) 
+    {
+        this.deptName = deptName;
+    }
+
+    public String getDeptName() 
+    {
+        return deptName;
     }
     public void setProjectName(String projectName) 
     {
@@ -215,6 +250,15 @@ public class TDataDemanDapplication extends BaseEntity
     {
         return plannedAppravlTime;
     }
+    public void setSupplierScopeId(String supplierScopeId) 
+    {
+        this.supplierScopeId = supplierScopeId;
+    }
+
+    public String getSupplierScopeId() 
+    {
+        return supplierScopeId;
+    }
     public void setJobDesc(String jobDesc) 
     {
         this.jobDesc = jobDesc;
@@ -269,23 +313,32 @@ public class TDataDemanDapplication extends BaseEntity
     {
         return status;
     }
-
-    public void setRemark(String remark) 
+    public void setReleaseTime(Date releaseTime) 
     {
-		this.remark = remark;
-	}
-    
-    public String getRemark() 
+        this.releaseTime = releaseTime;
+    }
+
+    public Date getReleaseTime() 
     {
-		return remark;
-	}
+        return releaseTime;
+    }
+    public void setReleaseTimeFlag(String releaseTimeFlag) 
+    {
+        this.releaseTimeFlag = releaseTimeFlag;
+    }
 
+    public String getReleaseTimeFlag() 
+    {
+        return releaseTimeFlag;
+    }
 
-	@Override
+    @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("requireNumber", getRequireNumber())
             .append("deptId", getDeptId())
+            .append("deptName", getDeptName())
             .append("projectName", getProjectName())
             .append("postType", getPostType())
             .append("postName", getPostName())
@@ -297,6 +350,7 @@ public class TDataDemanDapplication extends BaseEntity
             .append("supplierScope", getSupplierScope())
             .append("interviewer", getInterviewer())
             .append("plannedAppravlTime", getPlannedAppravlTime())
+            .append("supplierScopeId", getSupplierScopeId())
             .append("jobDesc", getJobDesc())
             .append("jobRequired", getJobRequired())
             .append("plannedLifeCycle", getPlannedLifeCycle())
@@ -304,6 +358,8 @@ public class TDataDemanDapplication extends BaseEntity
             .append("applicationTime", getApplicationTime())
             .append("status", getStatus())
             .append("remark", getRemark())
+            .append("releaseTime", getReleaseTime())
+            .append("releaseTimeFlag", getReleaseTimeFlag())
             .toString();
     }
 }
